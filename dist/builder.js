@@ -1,0 +1,201 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.assetHandlers = exports.configs = exports.unload = exports.load = void 0;
+const utils_1 = require("./utils");
+const load = function () {
+    (0, utils_1.Log)("plugin load");
+};
+exports.load = load;
+const unload = function () {
+    (0, utils_1.Log)("plugin unload");
+};
+exports.unload = unload;
+exports.configs = {
+    '*': {
+        hooks: './hooks',
+        // doc: 'editor/publish/custom-build-plugin.html',
+        options: {
+            enable: {
+                label: '开启',
+                description: '是否开启压缩',
+                default: true,
+                render: {
+                    ui: 'ui-checkbox',
+                },
+            },
+            toolType: {
+                label: '压缩工具类型',
+                description: '选择压缩工具类型',
+                default: 'tinypng',
+                render: {
+                    ui: 'ui-select',
+                    items: [
+                        {
+                            label: 'tinypng',
+                            value: 'tinypng',
+                        },
+                        {
+                            label: 'pngquant',
+                            value: 'pngquant',
+                        },
+                    ],
+                },
+            },
+            enableCache: {
+                label: '开启图库缓存',
+                description: '是否开启图库缓存',
+                default: true,
+                render: {
+                    ui: 'ui-checkbox',
+                },
+            },
+            enableRemoteCache: {
+                label: '是否将文件服务器作为图库缓存',
+                description: '是否使用文件服务器共享',
+                default: true,
+                render: {
+                    ui: 'ui-checkbox',
+                },
+            },
+            filters: {
+                label: '忽略压缩图片uuid',
+                description: '压缩时忽略指定uuid的图片，多个uuid换行分隔',
+                default: '',
+                render: {
+                    ui: 'ui-textarea'
+                }
+            },
+            concurrency: {
+                label: '压缩并发数',
+                description: '控制同一时间最大压缩数量',
+                default: 30,
+                render: {
+                    ui: 'ui-num-input',
+                    attributes: {
+                        step: 1,
+                        min: 1,
+                    },
+                },
+            },
+        }
+    }
+};
+// const complexTestItems = {
+//     number: {
+//         label: 'i18n:cocos-build-template.options.complexTestNumber',
+//         description: 'i18n:cocos-build-template.options.complexTestNumber',
+//         default: 80,
+//         render: {
+//             ui: 'ui-num-input',
+//             attributes: {
+//                 step: 1,
+//                 min: 0,
+//             },
+//         },
+//     },
+//     string: {
+//         label: 'i18n:cocos-build-template.options.complexTestString',
+//         description: 'i18n:cocos-build-template.options.complexTestString',
+//         default: 'cocos',
+//         render: {
+//             ui: 'ui-input',
+//             attributes: {
+//                 placeholder: 'i18n:cocos-build-template.options.enterCocos',
+//             },
+//         },
+//         verifyRules: ['ruleTest'],
+//     },
+//     boolean: {
+//         label: 'i18n:cocos-build-template.options.complexTestBoolean',
+//         description: 'i18n:cocos-build-template.options.complexTestBoolean',
+//         default: true,
+//         render: {
+//             ui: 'ui-checkbox',
+//         },
+//     },
+// };
+//
+// export const configs: BuildPlugin.Configs = {
+//     '*': {
+//         hooks: './hooks',
+//         doc: 'editor/publish/custom-build-plugin.html',
+//         options: {
+//             remoteAddress: {
+//                 label: 'i18n:cocos-build-template.options.remoteAddress',
+//                 default: 'https://www.cocos.com/',
+//                 render: {
+//                     ui: 'ui-input',
+//                     attributes: {
+//                         placeholder: 'Enter remote address...',
+//                     },
+//                 },
+//                 verifyRules: ['required'],
+//             },
+//             enterCocos: {
+//                 label: 'i18n:cocos-build-template.options.enterCocos',
+//                 description: 'i18n:cocos-build-template.options.enterCocos',
+//                 default: '',
+//                 render: {
+//                     /**
+//                      * @en Please refer to Developer -> UI Component for a list of all supported UI components
+//                      * @zh 请参考 开发者 -> UI 组件 查看所有支持的 UI 组件列表
+//                      */
+//                     ui: 'ui-input',
+//                     attributes: {
+//                         placeholder: 'i18n:cocos-build-template.options.enterCocos',
+//                     },
+//                 },
+//                 verifyRules: ['ruleTest'],
+//                 verifyLevel: 'warn',
+//             },
+//             selectTest: {
+//                 label: 'i18n:cocos-build-template.options.selectTest',
+//                 description: 'i18n:cocos-build-template.options.selectTest',
+//                 default: 'option2',
+//                 render: {
+//                     ui: 'ui-select',
+//                     items: [
+//                         {
+//                             label: 'i18n:cocos-build-template.options.selectTestOption1',
+//                             value: 'option1',
+//                         },
+//                         {
+//                             label: 'i18n:cocos-build-template.options.selectTestOption2',
+//                             value: 'option2',
+//                         },
+//                     ],
+//                 },
+//             },
+//             objectTest: {
+//                 label: 'i18n:cocos-build-template.options.objectTest',
+//                 description: 'i18n:cocos-build-template.options.objectTest',
+//                 type: 'object',
+//                 default: {
+//                     number: complexTestItems.number.default,
+//                     string: complexTestItems.string.default,
+//                     boolean: complexTestItems.boolean.default,
+//                 },
+//                 itemConfigs: complexTestItems,
+//             },
+//             arrayTest: {
+//                 label: 'i18n:cocos-build-template.options.arrayTest',
+//                 description: 'i18n:cocos-build-template.options.arrayTest',
+//                 type: 'array',
+//                 default: [complexTestItems.number.default, complexTestItems.string.default, complexTestItems.boolean.default],
+//                 itemConfigs: JSON.parse(JSON.stringify(Object.values(complexTestItems))),
+//             },
+//         },
+//         verifyRuleMap: {
+//             ruleTest: {
+//                 message: 'i18n:cocos-build-template.ruleTest_msg',
+//                 func(val, buildOptions) {
+//                     if (val === 'cocos') {
+//                         return true;
+//                     }
+//                     return false;
+//                 },
+//             },
+//         },
+//     },
+// };
+exports.assetHandlers = './asset-handlers';

@@ -1,0 +1,23 @@
+{
+    "name": "cc-compress-img",
+    "title": "cc-compress-img",
+    "package_version": 2,
+    "version": "1.0.0",
+    "author": "wintersun",
+    "description": "图片压缩工具，支持tinypng和pngquant压缩",
+    "contributions": {
+        "builder": "./dist/builder.js"
+    },
+    "dependencies": {
+        "@types/fs-extra": "^5.0.4",
+        "@types/node": "^14.5.2",
+        "fs-extra": "^10.0.0",
+        "md5": "^2.3.0",
+        "tinify": "^1.8.2",
+        "typescript": "^5.9.3"
+    },
+    "scripts": {
+        "build": "tsc -b",
+        "watch": "tsc -w"
+    }
+}
