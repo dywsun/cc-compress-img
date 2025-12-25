@@ -4,7 +4,7 @@ import path from 'path';
 import fs from 'fs';
 
 // 要压缩图片的根目录
-const IMG_SOURCE_DIR = "D:\\workspace\\cocos_game\\work\\avatar_img";
+const IMG_SOURCE_DIR = "D:\\workspace\\cocos_game\\avatar_img";
 // 压缩后的图片输出目录，如果为空则覆盖源图片
 const IMG_OUTPUT_DIR = ""
 // 缓存目录
@@ -20,14 +20,8 @@ let USE_TOOL_TYPE = 0;
 
     console.info("start compress images...")
     if (USE_TOOL_TYPE == 0) {
-        let binaryPath = ""
-        if (process.platform === "win32") {
-            binaryPath = path.join(__dirname, "../static/pngquant/win32/pngquant.exe")
-        } else if (process.platform === "darwin") {
-            binaryPath = path.join(__dirname, "../static/pngquant/macos/pngquant")
-        }
         const tool1 = new Pngquant()
-        tool1.init({ pluginRootPath: binaryPath })
+        tool1.init({ pluginRootPath: path.join(__dirname, "../") })
         tool1.compress({
             compressRootDir: IMG_SOURCE_DIR,
             // outputDir: outputDir,
